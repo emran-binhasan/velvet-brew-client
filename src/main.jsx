@@ -3,12 +3,23 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './Root'
+import AddCoffee from './components/AddCoffee'
+import UpdateCoffee from './components/UpdateCoffee'
+
 
 
 const router = createBrowserRouter([
   {
     path:'/',
     element:<Root/>
+  },
+  {
+    path: 'addCoffee',
+    element:<AddCoffee/>
+  },
+  {
+    path: 'updateCoffee',
+    element:<UpdateCoffee/>
   }
 ])
 
