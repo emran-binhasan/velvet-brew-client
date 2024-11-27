@@ -8,7 +8,8 @@ export default {
     extend: {
       backgroundImage: {
         'header-bg': "url('/src/assets/more/15.jpg')",
-        'hero-bg':"url('/src/assets/more/3.png')"
+        'hero-bg':"url('/src/assets/more/3.png')",
+        'add-coffee-bg':"url('/src/assets/more/11.png')"
       },
     },
   },

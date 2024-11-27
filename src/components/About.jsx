@@ -18,10 +18,10 @@ const About = () => {
                         <img
                             src={each.imgSrc}
                             alt={each.title}
-                            className="r"
+                            className="w-12"
                         />
-                        <h2 className="font-bold text-xl font-rancho mt-4">{each.title}</h2>
-                        <p className="text-sm font-light mt-2">{each.desc}</p>
+                        <h2 className="font-bold sm:text-xl text-lg font-rancho text-gray-700 mt-4">{each.title}</h2>
+                        <p className="sm:text-sm text-xs mt-2">{each.desc}</p>
                     </div>
                 ))}
             </div>
