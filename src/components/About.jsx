@@ -12,7 +12,7 @@ const About = () => {
 
     return (
         <div className="bg-[#ECEAE3] p-4">
-            <div className="w-full max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {aboutData.map((each) => (
                     <div className="rounded-lg p-4" key={each.id}>
                         <img
