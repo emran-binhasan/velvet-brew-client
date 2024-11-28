@@ -12,9 +12,22 @@ const AddCoffee = () => {
         const supplier = form.supplier.value;
         const taste = form.taste.value;
         const category = form.category.value;
-        const details = form.details.value;
-        const data = {name, chef, supplier,taste,category,details}
+        const price = form.price.value;
+        const photoURL = form.photoURL.value
+        const data = {name, chef, supplier,taste,category,price,photoURL}
+        console.log(`Adding data to database ${data}`)
         
+        fetch('http://localhost:5000/coffees',{
+            method:"POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+
+
     }
 
     return (
@@ -63,15 +76,15 @@ const AddCoffee = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Details</label>
-                                <input type="text" name="details" placeholder="Enter coffee details" className="input input-bordered w-full" required/>
+                                <label className="block text-sm font-medium text-gray-700">Price</label>
+                                <input type="text" name="price" placeholder="Enter coffee price" className="input input-bordered w-full" required/>
                             </div>
                         </div>
                         <div className="mb-6">
                             <label className="block text-sm font-medium text-gray-700">
                                 Photo
                             </label>
-                            <input type="url" name="photo" placeholder="Enter photo URL" className="input input-bordered w-full" required/>
+                            <input type="url" name="photoURL" placeholder="Enter photo URL" className="input input-bordered w-full" required/>
                         </div>
 
                         <div className="flex justify-center">
