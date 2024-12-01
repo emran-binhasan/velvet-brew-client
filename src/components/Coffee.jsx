@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { IoEyeSharp } from 'react-icons/io5';
 import { MdDelete, MdModeEdit } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 
 const Coffee = () => {
-    const [coffees,setCoffees] = useState([]);
-    useEffect(()=>{
-        fetch(`http://localhost:5000/coffees`)
-        .then(res => res.json())
-        .then(data => setCoffees(data))
-    },[])
+    const loadedCoffees = useLoaderData();
+    const[coffees, setCoffees] = useState(loadedCoffees);
     const navigate = useNavigate();
 
+    
+
     const handleRemoveCoffee = async _id => {
-        console.log(`remove ${_id}`);
         await fetch(`http://localhost:5000/coffees/${_id}`,{
             method:'DELETE',
+            headers: {
+                'content-type':'application/json'
+            }
         })
-        .then(res => res.json())
-        .then(data => console.log(data))
+        .then(res=> res.json())
+        .then(data => {
+            const remaining = coffees.filter(each => each._id != _id);
+            setCoffees(remaining)
+        })
+
+        
     }
     return (
         <div className='bg-coffe-bg'>
@@ -41,8 +46,8 @@ const Coffee = () => {
                             <p className='font-medium text-lg'>Price : <span className="text-gray-600">{coffee.price}</span></p>
                         </div>
                         <div className='flex flex-col space-y-2 p-4'>
-                            <button className='border p-3 rounded text-xl text-white bg-[#D2B48C]'><IoEyeSharp /></button>
-                            <button className='border p-3 rounded text-xl text-white bg-[#3C393B]'><MdModeEdit /></button>
+                            <Link to={`coffee/${coffee._id}`} className='border p-3 rounded text-xl text-white bg-[#D2B48C]'><IoEyeSharp /></Link>
+                            <Link to={`/updateCoffee/${coffee._id}`} className='border p-3 rounded text-xl text-white bg-[#3C393B]'><MdModeEdit /></Link>
                             <button onClick={()=>handleRemoveCoffee(coffee._id)} className='border p-3 rounded text-xl text-white bg-[#EA4744]'><MdDelete /></button>
                         </div>
                     </div>)

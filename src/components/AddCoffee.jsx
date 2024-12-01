@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const AddCoffee = () => {
     const navigate = useNavigate();
 
-    const handleAddCoffe = event => {
+    const handleAddCoffee = event => {
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
@@ -15,7 +15,7 @@ const AddCoffee = () => {
         const price = form.price.value;
         const photoURL = form.photoURL.value
         const data = {name, chef, supplier,taste,category,price,photoURL}
-        console.log(`Adding data to database ${data}`)
+        console.log(`Adding data to database ${JSON.stringify(data)}`)
         
         fetch('http://localhost:5000/coffees',{
             method:"POST",
@@ -25,7 +25,10 @@ const AddCoffee = () => {
             body: JSON.stringify(data)
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log('successfull');
+            form.reset(); 
+        })
 
 
     }
@@ -48,7 +51,7 @@ const AddCoffee = () => {
                     <p className="text-sm text-gray-500 text-center mb-6">
                         Fill in the details below to add a new coffee to the database.
                     </p>
-                    <form onSubmit={handleAddCoffe}>
+                    <form onSubmit={handleAddCoffee}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Name</label>
