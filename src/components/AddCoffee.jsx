@@ -26,7 +26,7 @@ const AddCoffee = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log('successfull');
+            console.log('successfull',data);
             form.reset(); 
         })
 

@@ -2,8 +2,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 
 const UpdateCoffee = () => {
     const navigate = useNavigate();
-    const data = useLoaderData();
-    console.log(data)
+    const loadedData = useLoaderData();
 
     const handleUpdateCoffee = event => {
         event.preventDefault();
@@ -15,8 +14,22 @@ const UpdateCoffee = () => {
         const category = form.category.value;
         const price = form.price.value;
         const photoURL = form.photoURL.value
-        const data = {name, chef, supplier,taste,category,price,photoURL};
-        console.log(data)
+        const updatedData = {name, chef, supplier,taste,category,price,photoURL};
+        console.log(updatedData)
+
+        fetch(`http://localhost:5000/coffees/${loadedData._id}`,{
+            method:'PUT',
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(updatedData)
+        }).then(res=> res.json())
+        .then(data => {
+            console.log(data);
+            if(data.modifiedCount>0){
+                console.log('Successfully updated')
+            }
+        })
     }
 
     return (
@@ -35,45 +48,45 @@ const UpdateCoffee = () => {
                         Add New Coffee
                     </h1>
                     <p className="text-sm text-gray-500 text-center mb-6">
-                        Fill in the details below to add a new coffee to the database.
+                        Fill in the details below to add a new coffee to the loadedDatabase.
                     </p>
                     <form onSubmit={handleUpdateCoffee}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Name</label>
-                                <input type="text" name="name" defaultValue={data.name} placeholder="Enter coffee name" className="input input-bordered w-full" required/>
+                                <input type="text" name="name" defaultValue={loadedData.name} placeholder="Enter coffee name" className="input input-bordered w-full" required/>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Chef</label>
-                                <input type="text" name="chef" defaultValue={data.chef} placeholder="Enter chef name" className="input input-bordered w-full" required/>
+                                <input type="text" name="chef" defaultValue={loadedData.chef} placeholder="Enter chef name" className="input input-bordered w-full" required/>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Supplier</label>
-                                <input type="text" name="supplier" defaultValue={data.supplier} placeholder="Enter supplier" className="input input-bordered w-full" required/>
+                                <input type="text" name="supplier" defaultValue={loadedData.supplier} placeholder="Enter supplier" className="input input-bordered w-full" required/>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Taste</label>
-                                <input type="text" name="taste" defaultValue={data.taste} placeholder="Enter coffee taste" className="input input-bordered w-full" required/>
+                                <input type="text" name="taste" defaultValue={loadedData.taste} placeholder="Enter coffee taste" className="input input-bordered w-full" required/>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Category</label>
-                                <input type="text" name="category"defaultValue={data.category}  placeholder="Enter coffee category" className="input input-bordered w-full" required/>
+                                <input type="text" name="category"defaultValue={loadedData.category}  placeholder="Enter coffee category" className="input input-bordered w-full" required/>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Price</label>
-                                <input type="text" name="price" defaultValue={data.price} placeholder="Enter coffee price" className="input input-bordered w-full" required/>
+                                <input type="text" name="price" defaultValue={loadedData.price} placeholder="Enter coffee price" className="input input-bordered w-full" required/>
                             </div>
                         </div>
                         <div className="mb-6">
                             <label className="block text-sm font-medium text-gray-700">
                                 Photo
                             </label>
-                            <input type="url" name="photoURL" defaultValue={data.photoURL} placeholder="Enter photo URL" className="input input-bordered w-full" required/>
+                            <input type="url" name="photoURL" defaultValue={loadedData.photoURL} placeholder="Enter photo URL" className="input input-bordered w-full" required/>
                         </div>
 
                         <div className="flex justify-center">
