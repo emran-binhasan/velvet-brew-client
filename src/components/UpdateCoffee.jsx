@@ -1,10 +1,11 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 const UpdateCoffee = () => {
     const navigate = useNavigate();
     const loadedData = useLoaderData();
 
     const handleUpdateCoffee = event => {
+        
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
@@ -16,20 +17,43 @@ const UpdateCoffee = () => {
         const photoURL = form.photoURL.value
         const updatedData = {name, chef, supplier,taste,category,price,photoURL};
         console.log(updatedData)
-
-        fetch(`http://localhost:5000/coffees/${loadedData._id}`,{
-            method:'PUT',
-            headers:{
-                'content-type':'application/json'
-            },
-            body:JSON.stringify(updatedData)
-        }).then(res=> res.json())
-        .then(data => {
-            console.log(data);
-            if(data.modifiedCount>0){
-                console.log('Successfully updated')
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Update"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/coffees/${loadedData._id}`,{
+                    method:'PUT',
+                    headers:{
+                        'content-type':'application/json'
+                    },
+                    body:JSON.stringify(updatedData)
+                }).then(res=> res.json())
+                .then(data => {
+                    console.log(data);
+                    if(data.modifiedCount>0){
+                        Swal.fire({
+                            title: "Updated",
+                            text: "Coffe data has been updated !",
+                            icon: "success"
+                          });
+                    }
+                    else{
+                        Swal.fire({
+                            title: "No Changes",
+                            text: "Sorry you didn't modify anything",
+                            icon: "info"
+                          });
+                    }
+                })
             }
-        })
+          });
+       
     }
 
     return (

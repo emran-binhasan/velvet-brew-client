@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddCoffee = () => {
     const navigate = useNavigate();
@@ -26,8 +27,14 @@ const AddCoffee = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log('successfull',data);
-            form.reset(); 
+            if(data.insertedId){
+                Swal.fire({
+                    title: "Congratulations !",
+                    text: "Coffe Added Successfully",
+                    icon: "success"
+                  });
+            }
+           
         })
 
 
